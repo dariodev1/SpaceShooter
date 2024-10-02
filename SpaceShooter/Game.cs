@@ -15,7 +15,15 @@ namespace SpaceShooter
                 Raylib.ClearBackground(Color.White);
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
-                Raylib.DrawTexture(player.Texture2D, 300, 300, Color.Brown);
+                Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
+                if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
+                {
+                    player.Move(Direction.Right);
+                }
+                else if (Raylib.IsKeyPressed(KeyboardKey.Left) || Raylib.IsKeyPressedRepeat(KeyboardKey.Left))
+                {
+                    player.Move(Direction.Left);
+                }
                 Raylib.EndDrawing();
             }
 
