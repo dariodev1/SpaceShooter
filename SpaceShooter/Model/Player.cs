@@ -1,24 +1,18 @@
 ﻿using Raylib_cs;
-using System.Reflection;
+using SpaceShooter.Model.Abstract;
 
 namespace SpaceShooter.Model
 {
-    internal class Player
+    internal class Player : GameObject
     {
-        public Texture2D Texture2D { get; }
+        public override string TexturePath { get => Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName) + @"\Assets\player.png"; }
 
-        public Player()
+        public Player(): base()
         {
-            string startupPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName)+ @"\Assets\player.png";
-            if (File.Exists(startupPath))
-            {
-                Texture2D = Raylib.LoadTexture(startupPath);
-            }
-            else 
-            {
-                Console.WriteLine("Not Exist");
-            }
+            
             
         }
+
+
     }
 }
