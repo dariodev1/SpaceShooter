@@ -5,8 +5,11 @@ namespace SpaceShooter.Model
 {
     internal class Enemy3 : GameObject
     {
-        public override Vector2 Position { get; set; } = new Vector2(700, 700);
-
         public override GameObjectType ObjectType => GameObjectType.Enemy3;
+
+        public Enemy3(Vector2 position) : base(position)
+        {
+
+        }
     }
 }

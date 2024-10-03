@@ -6,11 +6,12 @@ namespace SpaceShooter.Model.Abstract
     internal abstract class GameObject
     {
 
-        public abstract Vector2 Position { get; set; }
+        public  Vector2 Position { get; set; }
         internal Texture2D Texture2D { get; set; }
         public abstract GameObjectType ObjectType { get; }
-        protected GameObject()
+        protected GameObject(Vector2 position)
         {
+            Position = position;
             LoadTexture();
         }
 

@@ -1,15 +1,19 @@
 ﻿using Raylib_cs;
 using SpaceShooter.Model;
+using SpaceShooter.Model.Abstract;
 
 namespace SpaceShooter
 {
     internal class Game
     {
-        public Game() 
+        List<GameObject> Enemies = new List<GameObject>();
+        int screenWidth = 1200;
+        int screenHeight = 800;
+        public Game()
         {
-            Raylib.InitWindow(1200, 800, "Hello World");
-            Player player = new Player();
-            Enemy1 enemy = new Enemy1();
+            Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
+            GameObject player = new Player(new System.Numerics.Vector2(400, 400));
+            GenerateRowEnemies(8, GameObjectType.Enemy1);
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
@@ -17,20 +21,58 @@ namespace SpaceShooter
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
-                Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Red);
+                foreach (GameObject enemy in Enemies)
+                {
+                    Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
+                }
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
                 {
-                    player.Move(Direction.Right);
+                    if (player.Position.X+player.Texture2D. < screenWidth)
+                    {
+                        player.Move(Direction.Right);
+                    }
+
                 }
                 else if (Raylib.IsKeyPressed(KeyboardKey.Left) || Raylib.IsKeyPressedRepeat(KeyboardKey.Left))
                 {
-                    player.Move(Direction.Left);
+                    if (player.Position.X >= 10)
+                    {
+                        player.Move(Direction.Left);
+                    }
                 }
                 Raylib.EndDrawing();
             }
 
             Raylib.CloseWindow();
             Console.WriteLine("Hello, World!");
+        }
+
+        private void GenerateRowEnemies(int numberOfEnemiesInRow, GameObjectType type)
+        {
+            int posX = 100;
+            int posY = 100;
+
+            for (int j = 0; j < numberOfEnemiesInRow; j++)
+            {
+                switch (type)
+                {
+                    case GameObjectType.Enemy1:
+                        Enemies.Add(new Enemy1(new System.Numerics.Vector2(posX, posY)));
+                        break;
+                    case GameObjectType.Enemy2:
+                        Enemies.Add(new Enemy2(new System.Numerics.Vector2(posX, posY)));
+                        break;
+                    case GameObjectType.Enemy3:
+                        Enemies.Add(new Enemy3(new System.Numerics.Vector2(posX, posY)));
+                        break;
+                    default:
+                        break;
+                }
+
+                posX += 50;
+            }
+
+
         }
     }
 }
