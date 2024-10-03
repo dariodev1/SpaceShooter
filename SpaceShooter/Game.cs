@@ -9,6 +9,7 @@ namespace SpaceShooter
         {
             Raylib.InitWindow(1200, 800, "Hello World");
             Player player = new Player();
+            Enemy enemy = new Enemy();
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
@@ -16,6 +17,7 @@ namespace SpaceShooter
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
+                Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Red);
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
                 {
                     player.Move(Direction.Right);
