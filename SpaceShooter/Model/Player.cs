@@ -12,6 +12,9 @@ namespace SpaceShooter.Model
             
         }
 
+        public void LaunchMissile()
+        {
 
+        }
     }
 }

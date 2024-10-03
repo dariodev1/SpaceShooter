@@ -13,6 +13,7 @@ namespace SpaceShooter
         {
             Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
             GameObject player = new Player(new System.Numerics.Vector2(400, 400));
+            GameObject missile = new Missile(new System.Numerics.Vector2(400, 300));
             GenerateRowEnemies(8, GameObjectType.Enemy1);
             while (!Raylib.WindowShouldClose())
             {
@@ -21,13 +22,15 @@ namespace SpaceShooter
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
+                Raylib.DrawTextureEx(missile.Texture2D, missile.Position, 1.0F, 0.25F, Color.Brown);
+
                 foreach (GameObject enemy in Enemies)
                 {
                     Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
                 {
-                    if (player.Position.X+player.Texture2D. < screenWidth)
+                    if (player.Position.X + player.Texture2D.Width < screenWidth)
                     {
                         player.Move(Direction.Right);
                     }
@@ -39,6 +42,10 @@ namespace SpaceShooter
                     {
                         player.Move(Direction.Left);
                     }
+                }
+                else if(Raylib.IsKeyPressed(KeyboardKey.Space) || Raylib.IsKeyPressedRepeat(KeyboardKey.Space))
+                {
+                    missile.Move(Direction.Up);
                 }
                 Raylib.EndDrawing();
             }

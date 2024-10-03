@@ -32,6 +32,9 @@ namespace SpaceShooter.Model.Abstract
                 case GameObjectType.Player:
                     path += @"\Assets\player.png";
                     break;
+                case GameObjectType.Missile:
+                    path += @"\Assets\missile.png";
+                    break;
                 default:
                     break;
             }

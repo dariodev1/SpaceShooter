@@ -11,6 +11,7 @@ namespace SpaceShooter.Model
         Enemy1,
         Enemy2,
         Enemy3,
-        Player
+        Player,
+        Missile
     }
 }

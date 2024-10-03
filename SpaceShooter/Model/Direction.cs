@@ -10,5 +10,7 @@ namespace SpaceShooter.Model
     {
         Left,
         Right,
+        Up,
+        Down
     }
 }
