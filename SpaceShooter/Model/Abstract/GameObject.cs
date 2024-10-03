@@ -5,10 +5,10 @@ namespace SpaceShooter.Model.Abstract
 {
     internal abstract class GameObject
     {
-        public abstract string TexturePath { get; }
+
         public abstract Vector2 Position { get; set; }
         internal Texture2D Texture2D { get; set; }
-
+        public abstract GameObjectType ObjectType { get; }
         protected GameObject()
         {
             LoadTexture();
@@ -16,9 +16,27 @@ namespace SpaceShooter.Model.Abstract
 
         private void LoadTexture()
         {
-            if (TexturePath is not null && File.Exists(TexturePath))
+            var path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName);
+            switch (ObjectType)
             {
-                Texture2D = Raylib.LoadTexture(TexturePath);
+                case GameObjectType.Enemy1:
+                    path += @"\Assets\enemy1.png";
+                    break;
+                case GameObjectType.Enemy2:
+                    path += @"\Assets\enemy2.png";
+                    break;
+                case GameObjectType.Enemy3:
+                    path += @"\Assets\enemy3.png";
+                    break;
+                case GameObjectType.Player:
+                    path += @"\Assets\player.png";
+                    break;
+                default:
+                    break;
+            }
+            if (File.Exists(path))
+            {
+                Texture2D = Raylib.LoadTexture(path);
             }
         }
 

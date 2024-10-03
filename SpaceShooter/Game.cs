@@ -9,7 +9,7 @@ namespace SpaceShooter
         {
             Raylib.InitWindow(1200, 800, "Hello World");
             Player player = new Player();
-            Enemy enemy = new Enemy();
+            Enemy1 enemy = new Enemy1();
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
