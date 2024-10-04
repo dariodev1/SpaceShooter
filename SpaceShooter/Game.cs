@@ -7,22 +7,23 @@ namespace SpaceShooter
     internal class Game
     {
         List<GameObject> Enemies = new List<GameObject>();
+        Player? player = null;
         int screenWidth = 1200;
         int screenHeight = 800;
         public Game()
         {
             Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
-            GameObject player = new Player(new System.Numerics.Vector2(400, 400));
-            GameObject missile = new Missile(new System.Numerics.Vector2(400, 300));
+            player = new Player(new System.Numerics.Vector2(400, 400));
+
             GenerateRowEnemies(8, GameObjectType.Enemy1);
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(Color.White);
-
+                
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
-                Raylib.DrawTextureEx(missile.Texture2D, missile.Position, 1.0F, 0.25F, Color.Brown);
+                Raylib.DrawTextureEx(player.Missile.Texture2D, new System.Numerics.Vector2(player.Missile.Position.X, player.Missile.Position.Y), 1, 0.25F, Color.Blue);
 
                 foreach (GameObject enemy in Enemies)
                 {
@@ -33,6 +34,7 @@ namespace SpaceShooter
                     if (player.Position.X + player.Texture2D.Width < screenWidth)
                     {
                         player.Move(Direction.Right);
+                        player.Missile.Move(Direction.Right);
                     }
 
                 }
@@ -41,11 +43,15 @@ namespace SpaceShooter
                     if (player.Position.X >= 10)
                     {
                         player.Move(Direction.Left);
+                        player.Missile.Move(Direction.Left);
                     }
                 }
-                else if(Raylib.IsKeyPressed(KeyboardKey.Space) || Raylib.IsKeyPressedRepeat(KeyboardKey.Space))
+                else if (Raylib.IsKeyPressed(KeyboardKey.Space) || Raylib.IsKeyPressedRepeat(KeyboardKey.Space))
                 {
-                    missile.Move(Direction.Up);
+                    while (IsMissileOutsideOfBoard())
+                    {
+                        player.LaunchMissile();
+                    }
                 }
                 Raylib.EndDrawing();
             }
@@ -80,6 +86,15 @@ namespace SpaceShooter
             }
 
 
+        }
+
+        private bool IsMissileOutsideOfBoard()
+        {
+            if (player.Missile.Position.Y <= 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
