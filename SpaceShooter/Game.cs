@@ -7,6 +7,7 @@ namespace SpaceShooter
     internal class Game
     {
         List<GameObject> Enemies = new List<GameObject>();
+        Missile? playerMissile = null;
         Player? player = null;
         int screenWidth = 1200;
         int screenHeight = 800;
@@ -14,16 +15,22 @@ namespace SpaceShooter
         {
             Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
             player = new Player(new System.Numerics.Vector2(400, 400));
-
+            playerMissile = new Missile(new System.Numerics.Vector2(player.Position.X,player.Position.Y));
+            LoadTexture(player);
             GenerateRowEnemies(8, GameObjectType.Enemy1);
+            foreach (var enemy in Enemies)
+            {
+                LoadTexture(enemy);
+            }
+            
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(Color.White);
-                
+
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
-                Raylib.DrawTextureEx(player.Missile.Texture2D, new System.Numerics.Vector2(player.Missile.Position.X, player.Missile.Position.Y), 1, 0.25F, Color.Blue);
+                Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
 
                 foreach (GameObject enemy in Enemies)
                 {
@@ -34,7 +41,7 @@ namespace SpaceShooter
                     if (player.Position.X + player.Texture2D.Width < screenWidth)
                     {
                         player.Move(Direction.Right);
-                        player.Missile.Move(Direction.Right);
+                        playerMissile.Move(Direction.Right);
                     }
 
                 }
@@ -43,15 +50,17 @@ namespace SpaceShooter
                     if (player.Position.X >= 10)
                     {
                         player.Move(Direction.Left);
-                        player.Missile.Move(Direction.Left);
+                        playerMissile.Move(Direction.Left);
                     }
                 }
                 else if (Raylib.IsKeyPressed(KeyboardKey.Space) || Raylib.IsKeyPressedRepeat(KeyboardKey.Space))
                 {
+                    LoadTexture(playerMissile);
                     while (IsMissileOutsideOfBoard())
                     {
-                        player.LaunchMissile();
+                        LaunchPlayerMissile();
                     }
+                    UnloadTexture(playerMissile);
                 }
                 Raylib.EndDrawing();
             }
@@ -85,16 +94,38 @@ namespace SpaceShooter
                 posX += 50;
             }
 
-
+            
         }
-
+        
         private bool IsMissileOutsideOfBoard()
         {
-            if (player.Missile.Position.Y <= 0)
+            if (playerMissile.Position.Y <= 0)
             {
                 return false;
             }
             return true;
+        }
+
+        private void LoadTexture(GameObject obj)
+        {
+            var path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName);
+            path += obj.TexturePath;
+
+            if (File.Exists(path))
+            {
+                obj.Texture2D = Raylib.LoadTexture(path);
+            }
+        }
+
+        private void UnloadTexture(GameObject obj)
+        {
+            Raylib.UnloadTexture(obj.Texture2D);
+        }
+
+        public void LaunchPlayerMissile()
+        {
+            playerMissile.IsFired = true;
+            playerMissile.Move(Direction.Up);
         }
     }
 }

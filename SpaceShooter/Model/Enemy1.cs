@@ -7,9 +7,11 @@ namespace SpaceShooter.Model
     {
         public override GameObjectType ObjectType => GameObjectType.Enemy1;
 
-        public Enemy1(Vector2 position):base(position)
+        public override string TexturePath => @"\Assets\enemy1.png";
+
+        public Enemy1(Vector2 position) : base(position)
         {
-            base.LoadTexture(@"\Assets\enemy1.png");
+
         }
     }
 }

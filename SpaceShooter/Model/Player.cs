@@ -6,17 +6,13 @@ namespace SpaceShooter.Model
     internal class Player : GameObject
     {
         public override GameObjectType ObjectType => GameObjectType.Player;
-        public Missile? Missile { get; set; } = null;
+        public override string TexturePath => @"\Assets\player.png";
         public Player(Vector2 position) : base(position)
         {
-            base.LoadTexture(@"\Assets\player.png");
-            Missile = new Missile(Position);
+            
+            
         }
 
-        public void LaunchMissile()
-        {
-            Missile.IsFired = true;
-            Missile.Move(Direction.Up);
-        }
+        
     }
 }

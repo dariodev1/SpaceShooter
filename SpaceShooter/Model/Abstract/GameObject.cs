@@ -9,21 +9,11 @@ namespace SpaceShooter.Model.Abstract
         public  Vector2 Position { get; set; }
         internal Texture2D Texture2D { get; set; }
         public abstract GameObjectType ObjectType { get; }
+        public abstract string TexturePath { get; }
         protected GameObject(Vector2 position)
         {
             Position = position;
             
-        }
-
-        protected virtual void LoadTexture(string texturePath)
-        {
-            var path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName);
-            path += texturePath;
-            
-            if (File.Exists(path))
-            {
-                Texture2D = Raylib.LoadTexture(path);
-            }
         }
 
         public virtual void Move(Direction direction)
