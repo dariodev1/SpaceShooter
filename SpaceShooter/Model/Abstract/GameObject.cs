@@ -12,32 +12,14 @@ namespace SpaceShooter.Model.Abstract
         protected GameObject(Vector2 position)
         {
             Position = position;
-            LoadTexture();
+            
         }
 
-        private void LoadTexture()
+        protected virtual void LoadTexture(string texturePath)
         {
             var path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName);
-            switch (ObjectType)
-            {
-                case GameObjectType.Enemy1:
-                    path += @"\Assets\enemy1.png";
-                    break;
-                case GameObjectType.Enemy2:
-                    path += @"\Assets\enemy2.png";
-                    break;
-                case GameObjectType.Enemy3:
-                    path += @"\Assets\enemy3.png";
-                    break;
-                case GameObjectType.Player:
-                    path += @"\Assets\player.png";
-                    break;
-                case GameObjectType.Missile:
-                    path += @"\Assets\missile.png";
-                    break;
-                default:
-                    break;
-            }
+            path += texturePath;
+            
             if (File.Exists(path))
             {
                 Texture2D = Raylib.LoadTexture(path);

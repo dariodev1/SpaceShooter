@@ -9,7 +9,7 @@ namespace SpaceShooter.Model
 
         public Enemy3(Vector2 position) : base(position)
         {
-
+            base.LoadTexture(@"\Assets\enemy3.png");
         }
     }
 }

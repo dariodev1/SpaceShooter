@@ -9,11 +9,13 @@ namespace SpaceShooter.Model
         public Missile? Missile { get; set; } = null;
         public Player(Vector2 position) : base(position)
         {
+            base.LoadTexture(@"\Assets\player.png");
             Missile = new Missile(Position);
         }
 
         public void LaunchMissile()
         {
+            Missile.IsFired = true;
             Missile.Move(Direction.Up);
         }
     }
