@@ -12,8 +12,6 @@ namespace SpaceShooter.Model
 
         public override string TexturePath => @"\Assets\missile.png";
         public override GameObjectType ObjectType => GameObjectType.Missile;
-        public bool IsFired { get; set; } = false;
-
 
         public override void Move(Direction direction)
         {
@@ -26,12 +24,10 @@ namespace SpaceShooter.Model
                     Position = new Vector2(Position.X, Position.Y + 10);
                     break;
                 case Direction.Left:
-                    if (!IsFired)
-                        Position = new Vector2(Position.X - 10, Position.Y);
+                    Position = new Vector2(Position.X - 10, Position.Y);
                     break;
                 case Direction.Right:
-                    if (!IsFired)
-                        Position = new Vector2(Position.X + 10, Position.Y);
+                    Position = new Vector2(Position.X + 10, Position.Y);
                     break;
                 default:
                     break;

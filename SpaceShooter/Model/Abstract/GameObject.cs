@@ -10,6 +10,7 @@ namespace SpaceShooter.Model.Abstract
         internal Texture2D Texture2D { get; set; }
         public abstract GameObjectType ObjectType { get; }
         public abstract string TexturePath { get; }
+        public bool CanUnloadTexture { get; set; }
         protected GameObject(Vector2 position)
         {
             Position = position;

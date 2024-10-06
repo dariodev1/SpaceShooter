@@ -15,14 +15,14 @@ namespace SpaceShooter
         {
             Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
             player = new Player(new System.Numerics.Vector2(400, 400));
-            playerMissile = new Missile(new System.Numerics.Vector2(player.Position.X,player.Position.Y));
+            playerMissile = new Missile(new System.Numerics.Vector2(player.Position.X, player.Position.Y));
             LoadTexture(player);
             GenerateRowEnemies(8, GameObjectType.Enemy1);
             foreach (var enemy in Enemies)
             {
                 LoadTexture(enemy);
             }
-            
+            LoadTexture(playerMissile);
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
@@ -30,7 +30,7 @@ namespace SpaceShooter
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
-                Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
+
 
                 foreach (GameObject enemy in Enemies)
                 {
@@ -55,13 +55,16 @@ namespace SpaceShooter
                 }
                 else if (Raylib.IsKeyPressed(KeyboardKey.Space) || Raylib.IsKeyPressedRepeat(KeyboardKey.Space))
                 {
-                    LoadTexture(playerMissile);
-                    while (IsMissileOutsideOfBoard())
-                    {
-                        LaunchPlayerMissile();
-                    }
-                    UnloadTexture(playerMissile);
+                    LaunchPlayerMissile();
+
                 }
+                if (IsMissileWithinBoard())
+                {
+                    playerMissile.Move(Direction.Up);
+                    Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
+                }
+
+
                 Raylib.EndDrawing();
             }
 
@@ -94,10 +97,10 @@ namespace SpaceShooter
                 posX += 50;
             }
 
-            
+
         }
-        
-        private bool IsMissileOutsideOfBoard()
+
+        private bool IsMissileWithinBoard()
         {
             if (playerMissile.Position.Y <= 0)
             {
@@ -119,13 +122,17 @@ namespace SpaceShooter
 
         private void UnloadTexture(GameObject obj)
         {
-            Raylib.UnloadTexture(obj.Texture2D);
+            if (obj.CanUnloadTexture)
+            {
+                Raylib.UnloadTexture(obj.Texture2D);
+                obj.CanUnloadTexture = false;
+            }
+
         }
 
         public void LaunchPlayerMissile()
         {
-            playerMissile.IsFired = true;
-            playerMissile.Move(Direction.Up);
+            playerMissile.Position = player.Position;
         }
     }
 }
