@@ -32,10 +32,7 @@ namespace SpaceShooter
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
 
 
-                foreach (GameObject enemy in Enemies)
-                {
-                    Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
-                }
+                
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
                 {
                     if (player.Position.X + player.Texture2D.Width < screenWidth)
@@ -65,7 +62,10 @@ namespace SpaceShooter
                     Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
                 }
 
-
+                foreach (GameObject enemy in Enemies.Where(x => x.CanBeDraw == true))
+                {
+                    Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
+                }
                 Raylib.EndDrawing();
             }
 
@@ -138,12 +138,19 @@ namespace SpaceShooter
 
         private void IfMissileHittedEnemy()
         {
-            if (playerMissile.Position.Y == 200 && 
-                (playerMissile.Position.X > 50 && playerMissile.Position.X < 200)
-                )
+            foreach (var enemy in Enemies)
             {
-                throw new Exception();
+                var rangeY = enemy.Position.X + enemy.Texture2D.Height;
+                if (playerMissile.Position.Y == rangeY &&
+                playerMissile.Position.X >= enemy.Position.X &&
+                playerMissile.Position.X <= (enemy.Position.X + enemy.Texture2D.Width)
+                )
+                {
+                    enemy.CanBeDraw = false;
+                }
             }
+
+
         }
     }
 }

@@ -11,6 +11,7 @@ namespace SpaceShooter.Model.Abstract
         public abstract GameObjectType ObjectType { get; }
         public abstract string TexturePath { get; }
         public bool CanUnloadTexture { get; set; }
+        public bool CanBeDraw { get; set; } = true;
         protected GameObject(Vector2 position)
         {
             Position = position;
