@@ -58,6 +58,7 @@ namespace SpaceShooter
                     LaunchPlayerMissile();
 
                 }
+                IfMissileHittedEnemy();
                 if (IsMissileWithinBoard())
                 {
                     playerMissile.Move(Direction.Up);
@@ -133,6 +134,16 @@ namespace SpaceShooter
         public void LaunchPlayerMissile()
         {
             playerMissile.Position = player.Position;
+        }
+
+        private void IfMissileHittedEnemy()
+        {
+            if (playerMissile.Position.Y == 200 && 
+                (playerMissile.Position.X > 50 && playerMissile.Position.X < 200)
+                )
+            {
+                throw new Exception();
+            }
         }
     }
 }
