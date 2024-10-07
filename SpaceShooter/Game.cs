@@ -1,6 +1,7 @@
 ﻿using Raylib_cs;
 using SpaceShooter.Model;
 using SpaceShooter.Model.Abstract;
+using System;
 
 namespace SpaceShooter
 {
@@ -29,7 +30,7 @@ namespace SpaceShooter
                 Raylib.ClearBackground(Color.White);
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
-                Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
+                Raylib.DrawTextureRec(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
 
 
 
@@ -61,18 +62,16 @@ namespace SpaceShooter
                     IfMissileHittedEnemy();
                     Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
                 }
-                
+                Raylib.DrawRectangle((int)Enemies[0].Position.X, (int)Enemies[0].Position.Y, (int)Enemies[0].Texture2D.Width,(int)Enemies[0].Texture2D.Height, Color.Red);
                 foreach (GameObject enemy in Enemies.Where(x => x.CanBeDraw == true))
                 {
                     Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
                 }
                 Raylib.EndDrawing();
             }
-
             Raylib.CloseWindow();
             Console.WriteLine("Hello, World!");
         }
-
         private void GenerateRowEnemies(int numberOfEnemiesInRow, GameObjectType type)
         {
             int posX = 100;
@@ -147,11 +146,13 @@ namespace SpaceShooter
             var rangeY = Enemies[0].Position.Y;
             foreach (var enemy in Enemies.Where(x => x.CanBeDraw == true))
             {
+                
                 if (playerMissile.Position.Y == rangeY &&
                 playerMissile.Position.X >= enemy.Position.X &&
                 playerMissile.Position.X <= (enemy.Position.X + enemy.Texture2D.Width)
                 )
                 {
+                    
                     enemy.CanBeDraw = false;
                     break;
                 }
