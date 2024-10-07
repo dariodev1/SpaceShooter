@@ -32,7 +32,7 @@ namespace SpaceShooter
                 Raylib.DrawTexture(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
 
 
-                
+
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
                 {
                     if (player.Position.X + player.Texture2D.Width < screenWidth)
@@ -55,13 +55,13 @@ namespace SpaceShooter
                     LaunchPlayerMissile();
 
                 }
-                IfMissileHittedEnemy();
-                if (IsMissileWithinBoard())
+                if (playerMissile.WasFired && IsMissileWithinBoard())
                 {
                     playerMissile.Move(Direction.Up);
+                    IfMissileHittedEnemy();
                     Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
                 }
-
+                
                 foreach (GameObject enemy in Enemies.Where(x => x.CanBeDraw == true))
                 {
                     Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
@@ -95,7 +95,7 @@ namespace SpaceShooter
                         break;
                 }
 
-                posX += 50;
+                posX +=70;
             }
 
 
@@ -105,9 +105,14 @@ namespace SpaceShooter
         {
             if (playerMissile.Position.Y <= 0)
             {
+                playerMissile.WasFired = false;
                 return false;
             }
-            return true;
+            else
+            {
+                return true;
+            }
+
         }
 
         private void LoadTexture(GameObject obj)
@@ -133,20 +138,22 @@ namespace SpaceShooter
 
         public void LaunchPlayerMissile()
         {
+            playerMissile.WasFired = true;
             playerMissile.Position = player.Position;
         }
 
         private void IfMissileHittedEnemy()
         {
-            foreach (var enemy in Enemies)
+            var rangeY = Enemies[0].Position.Y;
+            foreach (var enemy in Enemies.Where(x => x.CanBeDraw == true))
             {
-                var rangeY = enemy.Position.X + enemy.Texture2D.Height;
                 if (playerMissile.Position.Y == rangeY &&
                 playerMissile.Position.X >= enemy.Position.X &&
                 playerMissile.Position.X <= (enemy.Position.X + enemy.Texture2D.Width)
                 )
                 {
                     enemy.CanBeDraw = false;
+                    break;
                 }
             }
 

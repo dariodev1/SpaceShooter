@@ -9,7 +9,7 @@ namespace SpaceShooter.Model
         {
 
         }
-
+        public bool WasFired { get; set; } = false;
         public override string TexturePath => @"\Assets\missile.png";
         public override GameObjectType ObjectType => GameObjectType.Missile;
 
