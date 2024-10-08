@@ -5,6 +5,7 @@ using System;
 
 // loading texteures from source:
 //Raylib.DrawTextureRec(playerMissile.Texture2D, new Rectangle(50, 45, 75, 65), new System.Numerics.Vector2(0, 0), Color.White); lives texture 
+//Raylib.DrawTextureRec(gameTexture, new Rectangle(360,320,110,140), new System.Numerics.Vector2(100,100), player.Color); enemy lvl1
 namespace SpaceShooter
 {
     internal class Game
@@ -33,8 +34,8 @@ namespace SpaceShooter
             {
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(Color.White);
-                Raylib.DrawTextureRec(gameTexture, player.Source, player.Position, player.Color);
-
+                //Raylib.DrawTextureRec(gameTexture, player.Source, player.Position, player.Color);
+                Raylib.DrawTextureRec(gameTexture, new Rectangle(360,320,110,140), new System.Numerics.Vector2(100,100), player.Color);
 
 
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
