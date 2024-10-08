@@ -9,20 +9,21 @@ namespace SpaceShooter
 {
     internal class Game
     {
-        private const string gameTexturePath = @"\Assets\resizedGraphics.png";
+        private const string gameTexturePath = @"\Assets\gameGraphic.png";
         private Texture2D gameTexture;
         List<Enemy> Enemies = new List<Enemy>();
         Missile? playerMissile = null;
         Player? player = null;
-        int screenWidth = 2600;
-        int screenHeight = 1600;
+        int screenWidth = 1800;
+        int screenHeight = 900;
         public Game()
         {
             Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
             LoadGameTexture();
+            Raylib.SetWindowPosition(100, 200);
             player = new Player(new System.Numerics.Vector2(400, 400));
             playerMissile = new Missile(new System.Numerics.Vector2(player.Position.X, player.Position.Y));
-            GenerateRowEnemies(8, GameObjectType.Enemy1);
+            //GenerateEnemies(8, GameObjectType.Enemy1);
             foreach (var enemy in Enemies)
             {
                 
@@ -32,9 +33,7 @@ namespace SpaceShooter
             {
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(Color.White);
-
-                Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
-                Raylib.DrawTextureRec(player.Texture2D, player.Source, player.Position, player.Color);
+                Raylib.DrawTextureRec(gameTexture, player.Source, player.Position, player.Color);
 
 
 
@@ -76,13 +75,14 @@ namespace SpaceShooter
             Raylib.CloseWindow();
             Console.WriteLine("Hello, World!");
         }
-        private void GenerateRowEnemies(int numberOfEnemiesInRow, GameObjectType type)
+        private void GenerateEnemies(int numberOfEnemiesInRow)
         {
             int posX = 100;
             int posY = 100;
 
             for (int j = 0; j < numberOfEnemiesInRow; j++)
             {
+
                 posX += 70;
             }
 

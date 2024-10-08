@@ -11,7 +11,6 @@ namespace SpaceShooter.Model
 
         }
         public bool WasFired { get; set; } = false;
-        public override GameObjectType ObjectType => GameObjectType.Missile;
         public override Rectangle Source => new Rectangle(100, 500, 60, 60);
         public override void Move(Direction direction)
         {

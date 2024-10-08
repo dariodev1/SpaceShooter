@@ -7,9 +7,7 @@ namespace SpaceShooter.Model.Abstract
     {
         public Vector2 Position { get; set; }
         internal Texture2D Texture2D { get; set; } 
-        public abstract GameObjectType ObjectType { get; }
         public string TexturePath { get; } = @"\Assets\resizedGraphics.png";
-        public bool CanUnloadTexture { get; set; }
         public bool CanBeDraw { get; set; } = true;
         public abstract Rectangle Source { get; }
         public Color Color { get; set; } = Color.White;
