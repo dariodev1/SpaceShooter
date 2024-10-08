@@ -10,7 +10,7 @@ namespace SpaceShooter.Model
 
         }
         public bool WasFired { get; set; } = false;
-        public override string TexturePath => @"\Assets\spaceInvaders.png";
+        public override string TexturePath => @"\Assets\spaceInvadersGraphic.png";
         public override GameObjectType ObjectType => GameObjectType.Missile;
 
         public override void Move(Direction direction)

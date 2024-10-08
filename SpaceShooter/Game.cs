@@ -30,7 +30,7 @@ namespace SpaceShooter
                 Raylib.ClearBackground(Color.White);
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
-                Raylib.DrawTextureRec(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
+                Raylib.DrawTextureRec(playerMissile.Texture2D, new Rectangle(1000,1000,500,500),new System.Numerics.Vector2(0,0), Color.Brown);
                 
 
 
