@@ -3,6 +3,8 @@ using SpaceShooter.Model;
 using SpaceShooter.Model.Abstract;
 using System;
 
+// loading texteures from source:
+//Raylib.DrawTextureRec(playerMissile.Texture2D, new Rectangle(50, 45, 75, 65), new System.Numerics.Vector2(0, 0), Color.White); lives texture 
 namespace SpaceShooter
 {
     internal class Game
@@ -10,8 +12,8 @@ namespace SpaceShooter
         List<GameObject> Enemies = new List<GameObject>();
         Missile? playerMissile = null;
         Player? player = null;
-        int screenWidth = 1200;
-        int screenHeight = 800;
+        int screenWidth = 2600;
+        int screenHeight = 1600;
         public Game()
         {
             Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
@@ -30,8 +32,8 @@ namespace SpaceShooter
                 Raylib.ClearBackground(Color.White);
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
-                Raylib.DrawTextureRec(playerMissile.Texture2D, new Rectangle(1000,1000,500,500),new System.Numerics.Vector2(0,0), Color.Brown);
-                
+                Raylib.DrawTextureRec(player.Texture2D, player.Source, player.Position, player.Color);
+
 
 
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
@@ -60,13 +62,13 @@ namespace SpaceShooter
                 {
                     playerMissile.Move(Direction.Up);
                     IfMissileHittedEnemy();
-                    Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
+                    //Raylib.DrawTextureEx(playerMissile.Texture2D, playerMissile.Position, 1, 0.25F, Color.Blue);
                 }
-                Raylib.DrawRectangle((int)Enemies[0].Position.X, (int)Enemies[0].Position.Y, (int)Enemies[0].Texture2D.Width,(int)Enemies[0].Texture2D.Height, Color.Red);
-                foreach (GameObject enemy in Enemies.Where(x => x.CanBeDraw == true))
-                {
-                    Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
-                }
+                //Raylib.DrawRectangle((int)Enemies[0].Position.X, (int)Enemies[0].Position.Y, (int)Enemies[0].Texture2D.Width, (int)Enemies[0].Texture2D.Height, Color.Red);
+                //foreach (GameObject enemy in Enemies.Where(x => x.CanBeDraw == true))
+                //{
+                //    Raylib.DrawTexture(enemy.Texture2D, (int)enemy.Position.X, (int)enemy.Position.Y, Color.Brown);
+                //}
                 Raylib.EndDrawing();
             }
             Raylib.CloseWindow();
@@ -94,7 +96,7 @@ namespace SpaceShooter
                         break;
                 }
 
-                posX +=70;
+                posX += 70;
             }
 
 
@@ -146,13 +148,13 @@ namespace SpaceShooter
             var rangeY = Enemies[0].Position.Y;
             foreach (var enemy in Enemies.Where(x => x.CanBeDraw == true))
             {
-                
+
                 if (playerMissile.Position.Y == rangeY &&
                 playerMissile.Position.X >= enemy.Position.X &&
                 playerMissile.Position.X <= (enemy.Position.X + enemy.Texture2D.Width)
                 )
                 {
-                    
+
                     enemy.CanBeDraw = false;
                     break;
                 }

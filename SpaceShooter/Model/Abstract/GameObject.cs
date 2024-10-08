@@ -5,16 +5,19 @@ namespace SpaceShooter.Model.Abstract
 {
     internal abstract class GameObject
     {
-        public  Vector2 Position { get; set; }
-        internal Texture2D Texture2D { get; set; }
+        public Vector2 Position { get; set; }
+        internal Texture2D Texture2D { get; set; } 
         public abstract GameObjectType ObjectType { get; }
-        public abstract string TexturePath { get; }
+        public string TexturePath { get; } = @"\Assets\resizedGraphics.png";
         public bool CanUnloadTexture { get; set; }
         public bool CanBeDraw { get; set; } = true;
+        public abstract Rectangle Source { get; }
+        public Color Color { get; set; } = Color.White;
+
         protected GameObject(Vector2 position)
         {
             Position = position;
-            
+
         }
 
         public virtual void Move(Direction direction)
