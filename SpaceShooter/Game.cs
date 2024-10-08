@@ -31,7 +31,7 @@ namespace SpaceShooter
 
                 Raylib.DrawText("Hello, world!", 12, 12, 20, Color.Yellow);
                 Raylib.DrawTextureRec(player.Texture2D, (int)player.Position.X, (int)player.Position.Y, Color.Brown);
-
+                
 
 
                 if (Raylib.IsKeyPressed(KeyboardKey.Right) || Raylib.IsKeyPressedRepeat(KeyboardKey.Right))
