@@ -9,7 +9,9 @@ namespace SpaceShooter
 {
     internal class Game
     {
-        List<GameObject> Enemies = new List<GameObject>();
+        private const string gameTexturePath = @"\Assets\resizedGraphics.png";
+        private Texture2D gameTexture;
+        List<Enemy> Enemies = new List<Enemy>();
         Missile? playerMissile = null;
         Player? player = null;
         int screenWidth = 2600;
@@ -17,15 +19,15 @@ namespace SpaceShooter
         public Game()
         {
             Raylib.InitWindow(screenWidth, screenHeight, "Hello World");
+            LoadGameTexture();
             player = new Player(new System.Numerics.Vector2(400, 400));
             playerMissile = new Missile(new System.Numerics.Vector2(player.Position.X, player.Position.Y));
-            LoadTexture(player);
             GenerateRowEnemies(8, GameObjectType.Enemy1);
             foreach (var enemy in Enemies)
             {
-                LoadTexture(enemy);
+                
             }
-            LoadTexture(playerMissile);
+            
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
@@ -81,21 +83,6 @@ namespace SpaceShooter
 
             for (int j = 0; j < numberOfEnemiesInRow; j++)
             {
-                switch (type)
-                {
-                    case GameObjectType.Enemy1:
-                        Enemies.Add(new Enemy1(new System.Numerics.Vector2(posX, posY)));
-                        break;
-                    case GameObjectType.Enemy2:
-                        Enemies.Add(new Enemy2(new System.Numerics.Vector2(posX, posY)));
-                        break;
-                    case GameObjectType.Enemy3:
-                        Enemies.Add(new Enemy3(new System.Numerics.Vector2(posX, posY)));
-                        break;
-                    default:
-                        break;
-                }
-
                 posX += 70;
             }
 
@@ -116,26 +103,18 @@ namespace SpaceShooter
 
         }
 
-        private void LoadTexture(GameObject obj)
+        private void LoadGameTexture()
         {
             var path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName);
-            path += obj.TexturePath;
+            path += gameTexturePath;
 
             if (File.Exists(path))
             {
-                obj.Texture2D = Raylib.LoadTexture(path);
+                gameTexture = Raylib.LoadTexture(path);
             }
         }
 
-        private void UnloadTexture(GameObject obj)
-        {
-            if (obj.CanUnloadTexture)
-            {
-                Raylib.UnloadTexture(obj.Texture2D);
-                obj.CanUnloadTexture = false;
-            }
-
-        }
+        
 
         public void LaunchPlayerMissile()
         {
