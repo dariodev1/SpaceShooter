@@ -2,9 +2,13 @@
 {
     public enum EnemyLevel
     {
-        Level_One,
-        Level_Two,
-        Level_Three,
-        Level_Four
+        One,
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight
     }
 }
