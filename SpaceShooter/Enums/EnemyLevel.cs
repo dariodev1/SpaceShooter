@@ -1,6 +1,6 @@
 ﻿namespace SpaceShooter.Enums
 {
-    public enum EnemyType
+    public enum EnemyLevel
     {
         Level_One,
         Level_Two,

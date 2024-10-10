@@ -5,6 +5,6 @@ namespace SpaceShooter.Model.Abstract
 {
     public interface IEnemy
     {
-        Dictionary<EnemyType,Rectangle> EnemyTextures { get; set; }
+        Dictionary<EnemyLevel,Rectangle> EnemyTextures { get; set; }
     }
 }

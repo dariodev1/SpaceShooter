@@ -9,11 +9,11 @@ namespace SpaceShooter.Model
     {
         public override Rectangle Source => new Rectangle(100, 500, 60, 60);
 
-        public Dictionary<EnemyType, Rectangle> EnemyTextures { get ; set ; }
+        public Dictionary<EnemyLevel, Rectangle> EnemyTextures { get ; set ; }
 
         public Enemy(Vector2 position) : base(position)
         {
-            EnemyTextures = new Dictionary<EnemyType, Rectangle>() { };
+            EnemyTextures = new Dictionary<EnemyLevel, Rectangle>() { };
             
         }
     }
